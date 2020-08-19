@@ -6,9 +6,11 @@
 <html lang="en">
 <jsp:include page="header.jsp"/>
 
-<body>
+<body class="hold-transition sidebar-mini">
+
 <jsp:include page="admin_nav.jsp"/>
   
+ 
 <jsp:include page="scripts.jsp"/>
 </body>
 </html>
