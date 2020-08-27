@@ -34,6 +34,7 @@ public class LoginServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
+//		response.sendRedirect("AdminCustomers");
 	}
 
 	/**
@@ -43,37 +44,47 @@ public class LoginServlet extends HttpServlet {
 		
 		try {
 			
-			//Initialize the database
-			Connection conn = Database.initializeDatabase();
 			
 			//Prepare the query to look for manager or simple bank user
 			
-			ResultSet userResult = null;
+			ModelLogin login = new ModelLogin();
+			login.setEmail(request.getParameter("email"));
+			login.setPassword(request.getParameter("password"));
 			
-			//Step - 1: Check for the bank user
-			String checkUser = "select * from `user` where `email` =  '"+request.getParameter("email")+"' and `password` = '" + request.getParameter("password") + "'";  
-			PreparedStatement st = conn.prepareStatement(checkUser);
-			System.out.println(checkUser);
-			userResult =  st.executeQuery(checkUser);
-			System.out.println(request.getParameter("email"));
-			System.out.println(request.getParameter("password"));
 			
 			
 			//Step - 2: Check for the admin user
+			 ModelAdmin admin = LoginDao.loginAdmin(login);
 			
-			 if(userResult.next()) {
-		    	  System.out.println("User found : - " + userResult.getString("email"));
+			//If Admin User - Redirect the user to admin dashboard
+			 
+			 if(admin.getEmail()!=null && admin.getEmail().equals(login.getEmail())) {
+		    	  System.out.println("User found Admin: - " + admin.getEmail());
 		    	  HttpSession session = request.getSession();
-		    	  session.setAttribute("first_name", userResult.getString("first_name"));
-		    	  session.setAttribute("user_id", userResult.getString("user_id"));
-		    	  session.setAttribute("email", userResult.getString("email"));
-		    	  session.setAttribute("user_type", "user");
+		    	  session.setAttribute("first_name", admin.getFirst_name());
+		    	  session.setAttribute("user_id", admin.getAdmin_id());
+		    	  session.setAttribute("email", admin.getEmail());
+		    	  session.setAttribute("user_type", "admin");
 		    	  response.sendRedirect("admin");
 		    	  
 		     }
 			 
-				st.close();
-				conn.close();
+			 //If Normal Bank User - Redirect to user dashboard
+			
+				ModelUser user = LoginDao.loginUser(login);
+			 
+				  
+				 if(user.getEmail()!=null && user.getEmail().equals(login.getEmail())) {
+			    	  System.out.println("User found - Bank User: - " + user.getEmail());
+			    	  HttpSession session = request.getSession();
+			    	  session.setAttribute("first_name", user.getFirst_name());
+			    	  session.setAttribute("user_id", user.getUser_id());
+			    	  session.setAttribute("email", user.getEmail());
+			    	  session.setAttribute("user_type", "user");
+			    	  response.sendRedirect("user");
+			    	  
+			     }
+				
 				
 			
 			
@@ -82,8 +93,8 @@ public class LoginServlet extends HttpServlet {
 			e.printStackTrace();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+			PrintEx.printSQLException(e);
+		} 
 		
 		
 		

@@ -11,7 +11,7 @@
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="info">
-          <a href="/YourBank/admin" class="d-block">Admin Name</a>
+          <a href="/YourBank/admin" class="d-block"><%= session.getAttribute( "first_name" ) %></a>
         </div>
       </div>
 
@@ -48,7 +48,7 @@
           </li>
           
           <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="/YourBank/Logout" class="nav-link">
               <i class="nav-icon fas fa-sign-out-alt"></i>
               <p>
                 Log Out

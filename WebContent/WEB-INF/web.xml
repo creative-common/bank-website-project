@@ -8,6 +8,38 @@
  </welcome-file-list>
 
 
+<!--Admin Authentication Filter-->
+<filter>
+   <filter-name>AdminAuthenticationFilter</filter-name>
+   <filter-class>AdminAuthenticationFilter</filter-class>
+   <init-param>
+      <param-name>test-param</param-name>
+      <param-value>Initialization Paramter</param-value>
+   </init-param>
+</filter>
+
+<filter-mapping>
+   <filter-name>AdminAuthenticationFilter</filter-name>
+   <url-pattern>/admin/*</url-pattern>
+</filter-mapping>
+
+<!--User Authentication Filter-->
+<filter>
+   <filter-name>UserAuthenticationFilter</filter-name>
+   <filter-class>UserAuthenticationFilter</filter-class>
+   <init-param>
+      <param-name>test-param</param-name>
+      <param-value>Initialization Paramter</param-value>
+   </init-param>
+</filter>
+
+<filter-mapping>
+   <filter-name>UserAuthenticationFilter</filter-name>
+   <url-pattern>/user/*</url-pattern>
+</filter-mapping>
+
+
+<!--Login Servlet-->
 <servlet>
 	<servlet-name>Login</servlet-name>
 	<servlet-class>LoginServlet</servlet-class>
@@ -17,6 +49,7 @@
 	<servlet-name>Login</servlet-name>
 	<url-pattern>/Login</url-pattern>
 </servlet-mapping>
+
 
 <servlet>
 	<servlet-name>login</servlet-name>
@@ -28,19 +61,36 @@
   <url-pattern>/login</url-pattern>
 </servlet-mapping>
 
+
+<!--LogOut Servlet-->
+<servlet>
+	<servlet-name>Logout</servlet-name>
+	<servlet-class>LogOutServlet</servlet-class>
+</servlet>
+
+<servlet-mapping>
+	<servlet-name>Logout</servlet-name>
+	<url-pattern>/Logout</url-pattern>
+</servlet-mapping>
+
+
 <!--Error 404 Routes-->
 
 <servlet>
 	<servlet-name>error-404</servlet-name>
-	<jsp-file>/404.jsp</jsp-file>
+	<jsp-file>/pages/404.jsp</jsp-file>
 </servlet>
-
-
 
 <servlet-mapping>
   <servlet-name>error-404</servlet-name>
   <url-pattern>/404</url-pattern>
 </servlet-mapping>
+
+
+<error-page>
+        <error-code>404</error-code>
+        <location>/404</location>
+</error-page>
 
 
 <!--User Routes-->
@@ -85,16 +135,18 @@
 </servlet-mapping>
 
 
+
+<!--Admin Side Server Controller Mappings-->
+
 <servlet>
 	<servlet-name>admin-customers</servlet-name>
 	<jsp-file>/pages/admin/customers.jsp</jsp-file>
 </servlet>
 
 <servlet-mapping>
-  <servlet-name>admin-customers</servlet-name>
-  <url-pattern>/admin/customers</url-pattern>
+	<servlet-name>admin-customers</servlet-name>
+	<url-pattern>/admin/customers</url-pattern>
 </servlet-mapping>
-
 
 <servlet>
 	<servlet-name>admin-customers-details</servlet-name>
@@ -125,6 +177,10 @@
   <servlet-name>admin-account-details</servlet-name>
   <url-pattern>/admin/customer/account</url-pattern>
 </servlet-mapping>
+
+
+
+
 
 
 </web-app>

@@ -17,7 +17,7 @@
     <div class="card-body login-card-body">
       <p class="login-box-msg">Sign in to start your session</p>
 
-     <!--  <form method="POST" action="Login"> -->
+      <form method="POST" action="Login">
         <div class="input-group mb-3">
           <input type="email" name="email" class="form-control" placeholder="Email">
           <div class="input-group-append">
@@ -45,12 +45,11 @@
           </div>
           <!-- /.col -->
           <div class="col-4">
-            <a href="admin" class="btn btn-primary btn-block">Sign In as Admin</a>
-             <a href="user" class="btn btn-primary btn-block">Sign In as User</a>
+            <button type="submit" class="btn btn-primary btn-block">Sign In</button>
           </div>
           <!-- /.col -->
         </div>
-    <!--   </form> -->
+     </form> 
 
      
 
